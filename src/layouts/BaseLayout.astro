@@ -1,0 +1,21 @@
+---
+const { title = 'Hirotomo Blog', description = 'English × Japanese Culture × Dev' } = Astro.props;
+---
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>{title}</title>
+  <meta name="description" content={description}>
+</head>
+<body style="max-width: 860px; margin: 0 auto; padding: 2rem; line-height: 1.7;">
+  <header style="margin-bottom: 2rem;">
+    <a href="/" style="text-decoration:none;"><h1 style="margin:0;">Hirotomo Sasaki</h1></a>
+    <p style="margin-top: .25rem; opacity:.75;">English × Japanese Culture × Dev</p>
+  </header>
+  <main>
+    <slot />
+  </main>
+</body>
+</html>
