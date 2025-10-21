@@ -1,20 +1,32 @@
 ---
-import BaseLayout from '../layouts/BaseLayout.astro';
+import Layout from '../components/Layout.astro';
 import BlogCard from '../components/BlogCard.astro';
+
+const posts = await Astro.glob('./blog/*.mdx');
+const latest = posts
+  .sort((a,b)=> new Date(b.frontmatter.date).getTime()-new Date(a.frontmatter.date).getTime())
+  .slice(0,6);
 ---
-<BaseLayout title="Home | Hirotomo Blog" description="English × Japanese Culture × Dev">
-  <section class="hero">
-    <h1 class="text-3xl sm:text-4xl font-bold tracking-tight">English × Japanese Culture × Dev</h1>
-    <p class="mt-3 text-zinc-600 dark:text-zinc-400">
-      日本文化を英語でわかりやすく。個人開発と合わせてストック資産化していきます。
+<Layout title="Hirotomo Blog | English × Japanese Culture × Dev" description="英語で日本文化を伝えるブログ。英語表現・文化ガイド・実践例を分かりやすく。">
+  <section class="mb-8">
+    <h1 class="text-3xl sm:text-4xl font-bold tracking-tight">English × Japanese Culture</h1>
+    <p class="mt-3 text-[hsl(var(--muted))] max-w-2xl">
+      英語で日本文化を伝えるための実用記事を毎週更新。例文・フレーズ・文化背景まで。
     </p>
   </section>
 
-  <section class="max-w-3xl mx-auto px-4">
-    <h2 class="text-xl font-semibold mb-3">Latest</h2>
-    <div class="grid gap-3">
-      <BlogCard href="/blog/omotenashi/" title="日本の『おもてなし』を英語で説明する方法" description="見返りを求めない心・細部への配慮・調和の精神で説明。" date="2025-10-21" />
-      <BlogCard href="/blog/shrine-etiquette/" title="神社参拝マナーを英語で説明する：5つのポイント" description="鳥居・手水・二礼二拍手一礼を英語で説明。" date="2025-10-21" />
+  <section>
+    <h2 class="text-xl font-semibold mb-3">最新記事</h2>
+    <div class="grid gap-4">
+      {latest.map(p => (
+        <BlogCard
+          href={p.url}
+          title={p.frontmatter.title}
+          description={p.frontmatter.description}
+          date={p.frontmatter.date}
+          image={p.frontmatter.image}
+        />
+      ))}
     </div>
   </section>
-</BaseLayout>
+</Layout>

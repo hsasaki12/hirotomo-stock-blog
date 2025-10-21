@@ -2,26 +2,42 @@
 @tailwind components;
 @tailwind utilities;
 
-/* Base */
-@layer base {
-  html { scroll-behavior: smooth; }
-  a { @apply text-indigo-600 hover:text-indigo-700 dark:text-indigo-300 dark:hover:text-indigo-200; }
+/* Design tokens */
+:root {
+  /* 明るい白＋知的な濃紺＋やさしい灰青 */
+  --bg: 210 20% 98%;
+  --fg: 222 47% 11%;
+  --muted: 220 10% 40%;
+  --card: 0 0% 100%;
+  --accent: 217 91% 60%; /* 明るいブルー（#3b82f6 付近） */
 }
-
-/* ヘルパー */
-@layer components {
-  .hero {
-    @apply max-w-3xl mx-auto px-4 py-10;
+@media (prefers-color-scheme: dark) {
+  :root {
+    /* dark設定を無効化（ライトモードを固定） */
+    --bg: 210 20% 98%;
+    --fg: 222 47% 11%;
+    --muted: 220 10% 40%;
+    --card: 0 0% 100%;
+    --accent: 217 91% 60%;
   }
 }
 
-/* 記事の読みやすさを底上げ */
-.prose {
-  @apply prose-zinc dark:prose-invert;
+
+@layer base {
+  html { scroll-behavior: smooth; }
+  body { @apply bg-[hsl(var(--bg))] text-[hsl(var(--fg))]; }
+  a { @apply underline-offset-4 decoration-transparent hover:decoration-[hsl(var(--accent))] transition; }
 }
-.prose :where(h2,h3){ scroll-margin-top: 6rem; }
+
+@layer components {
+  .container-narrow { @apply max-w-3xl mx-auto px-5; }
+  .btn-primary { @apply inline-flex items-center gap-2 rounded-xl px-4 py-2 bg-[hsl(var(--accent))] text-white no-underline hover:opacity-90 transition; }
+  .card { @apply rounded-2xl border border-black/5 dark:border-white/10 bg-[hsl(var(--card))] shadow-sm; }
+}
+
+/* Article typography */
+.prose { @apply prose-zinc dark:prose-invert max-w-none; }
 .prose :where(p,li){ @apply leading-8; }
-.prose code { @apply text-sm px-1.5 py-0.5 rounded bg-zinc-100 dark:bg-zinc-800; }
-.prose blockquote { @apply border-l-4 border-indigo-300 dark:border-indigo-600 bg-indigo-50/40 dark:bg-indigo-900/20 rounded-md p-4; }
-.prose table { @apply w-full text-sm; }
+.prose h2 { @apply mt-10; }
 .prose img { @apply rounded-xl; }
+.prose blockquote { @apply border-l-4 pl-4 italic text-[hsl(var(--muted))]; }

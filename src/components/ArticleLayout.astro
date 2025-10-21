@@ -1,0 +1,27 @@
+---
+import Layout from "./Layout.astro";
+import RelatedPosts from "./RelatedPosts.astro";
+import NewsletterCTA from "./NewsletterCTA.astro";
+
+interface Props {
+  title: string;
+  description?: string;
+  date?: string;
+  image?: string;
+}
+const { title, description, date, image } = Astro.props;
+const url = (Astro.site?.toString() ?? '') + Astro.url.pathname;
+---
+<Layout title={title} description={description} type="article" image={image} datePublished={date} dateModified={date}>
+  <article class="prose">
+    <header class="not-prose mb-6">
+      <h1 class="text-3xl sm:text-4xl font-bold tracking-tight">{title}</h1>
+      {description && <p class="mt-2 text-[hsl(var(--muted))]">{description}</p>}
+      {date && <time class="mt-1 block text-sm text-[hsl(var(--muted))]">{new Date(date).toLocaleDateString('ja-JP')}</time>}
+    </header>
+    <slot />
+  </article>
+
+  <NewsletterCTA />
+  <RelatedPosts currentUrl={url} />
+</Layout>

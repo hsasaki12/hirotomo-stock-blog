@@ -1,0 +1,24 @@
+---
+interface Props { currentUrl: string }
+const { currentUrl } = Astro.props;
+
+// 同じディレクトリのMDXから新しい順で3件抽出（自分を除く）
+const posts = await Astro.glob('../pages/blog/*.mdx');
+const related = posts
+  .filter(p => p.url !== currentUrl)
+  .sort((a,b)=> new Date(b.frontmatter.date).getTime()-new Date(a.frontmatter.date).getTime())
+  .slice(0,3);
+---
+{related.length > 0 && (
+  <section class="mt-12">
+    <h3 class="text-lg font-semibold mb-3">関連記事</h3>
+    <div class="grid gap-3">
+      {related.map(p => (
+        <a href={p.url} class="card p-4 no-underline hover:shadow">
+          <div class="text-base font-medium">{p.frontmatter.title}</div>
+          {p.frontmatter.description && <div class="text-sm text-[hsl(var(--muted))] mt-1 line-clamp-2">{p.frontmatter.description}</div>}
+        </a>
+      ))}
+    </div>
+  </section>
+)}

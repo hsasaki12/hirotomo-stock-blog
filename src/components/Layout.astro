@@ -1,0 +1,32 @@
+---
+import "../styles/global.css";
+import SiteHead from "./SiteHead.astro";
+import Navbar from "./Navbar.astro";
+import Footer from "./Footer.astro";
+
+interface Props {
+  title: string;
+  description?: string;
+  type?: 'website' | 'article';
+  image?: string;
+  datePublished?: string;
+  dateModified?: string;
+}
+
+const { title, description, type = 'website', image, datePublished, dateModified } = Astro.props;
+---
+<!doctype html>
+<html lang="ja">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <SiteHead title={title} description={description} type={type} image={image} datePublished={datePublished} dateModified={dateModified} />
+  </head>
+  <body>
+    <Navbar />
+    <main class="container-narrow py-10">
+      <slot />
+    </main>
+    <Footer />
+  </body>
+</html>

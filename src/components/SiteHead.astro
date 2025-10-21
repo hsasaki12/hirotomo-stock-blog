@@ -1,0 +1,60 @@
+---
+interface Props {
+  title: string;
+  description?: string;
+  url?: string;
+  image?: string;
+  type?: 'website' | 'article';
+  datePublished?: string;
+  dateModified?: string;
+}
+const site = Astro.site?.toString() ?? '';
+const {
+  title,
+  description = '',
+  url = site + Astro.url.pathname,
+  image = `${site}/og/default.png`,
+  type = 'website',
+  datePublished,
+  dateModified = datePublished,
+} = Astro.props;
+
+const jsonLd =
+  type === 'article'
+    ? {
+        '@context': 'https://schema.org',
+        '@type': 'Article',
+        headline: title,
+        description,
+        datePublished,
+        dateModified,
+        mainEntityOfPage: url,
+        author: { '@type': 'Person', name: 'Hirotomo Sasaki' },
+        publisher: { '@type': 'Organization', name: 'Hirotomo Blog' },
+        image,
+      }
+    : {
+        '@context': 'https://schema.org',
+        '@type': 'WebSite',
+        name: 'Hirotomo Blog',
+        url: site || url,
+        description,
+      };
+---
+<title>{title}</title>
+<meta name="description" content={description} />
+<link rel="canonical" href={url} />
+
+<meta property="og:type" content={type} />
+<meta property="og:title" content={title} />
+<meta property="og:description" content={description} />
+<meta property="og:url" content={url} />
+<meta property="og:image" content={image} />
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content={title} />
+<meta name="twitter:description" content={description} />
+<meta name="twitter:image" content={image} />
+
+<script type="application/ld+json">
+  {JSON.stringify(jsonLd)}
+</script>

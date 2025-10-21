@@ -1,19 +1,32 @@
 ---
-    title: "日本語の『敬語』を英語で説明する｜How to Explain Keigo in English"
-    description: "尊敬語・謙譲語・丁寧語の違いを英語で簡潔に説明。場面別の例も紹介。"
-    date: "2025-10-22"
-    ---
+title: "日本語の『敬語』を英語で説明する｜How to Explain Keigo in English"
+description: "尊敬語・謙譲語・丁寧語の違いを英語で簡潔に説明。場面別の例と自然な英語表現を掲載。"
+date: "2025-10-22"
+---
 
-    import BaseLayout from '../../layouts/BaseLayout.astro';
-    import Article from '../../components/Article.astro';
+import ArticleLayout from '../../components/ArticleLayout.astro';
 
-    <BaseLayout title={frontmatter.title} description={frontmatter.description}>
-      <Article title={frontmatter.title} description={frontmatter.description} date={frontmatter.date}>
+<ArticleLayout title={frontmatter.title} description={frontmatter.description} date={frontmatter.date}>
 
-    # 日本語の「敬語」を英語で説明する
+# 日本語の「敬語」を英語で説明する  
 *How to Explain Keigo in English*
 
-Keigo is honorific speech used to show respect and manage social distance: respect, humble, and polite forms.
+## Keigoとは
+日本語の敬語は **尊敬語 / 謙譲語 / 丁寧語** の3種類。目的は **敬意の表現と距離感の調整** です。
 
-      </Article>
-    </BaseLayout>
+> Keigo is a system of honorific speech in Japanese used to show respect and manage social distance.
+
+## 種類と例
+- **尊敬語（respectful language）**：相手を高める  
+  - 例：行く → *いらっしゃる* / *おいでになる*  
+- **謙譲語（humble language）**：自分を低める  
+  - 例：行く → *伺う* / *参る*  
+- **丁寧語（polite language）**：語尾の丁寧化  
+  - 例：〜です / 〜ます
+
+## 英語での説明ポイント
+- 「身分差」ではなく**場面**での切り替え  
+- **社外/社内**の使い分け（*customer-facing tone* に近い）  
+- 直訳より **意味を補って説明** する
+
+</ArticleLayout>
