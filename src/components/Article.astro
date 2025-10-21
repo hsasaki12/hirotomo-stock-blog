@@ -1,0 +1,16 @@
+---
+interface Props {
+  title: string;
+  description?: string;
+  date?: string;
+}
+const { title, description, date } = Astro.props;
+---
+<article class="prose prose-zinc dark:prose-invert max-w-3xl mx-auto px-4 py-10">
+  <header class="mb-6 not-prose">
+    <h1 class="text-3xl sm:text-4xl font-bold tracking-tight">{title}</h1>
+    {description && <p class="mt-2 text-zinc-600 dark:text-zinc-400">{description}</p>}
+    {date && <time class="mt-1 block text-sm text-zinc-500">{new Date(date).toLocaleDateString('ja-JP')}</time>}
+  </header>
+  <slot />
+</article>

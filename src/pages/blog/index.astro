@@ -1,9 +1,22 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
+import BlogCard from '../../components/BlogCard.astro';
+
+// この index.astro と同じ階層の .mdx を自動取得
+const posts = await Astro.glob('./**/*.mdx');
+// タイトルなどを frontmatter から取る（無い場合はファイル名）
+const items = posts.map(p => ({
+  href: p.url,
+  title: p.frontmatter?.title ?? p.file.split('/').pop()?.replace('.mdx',''),
+  description: p.frontmatter?.description ?? '',
+  date: p.frontmatter?.date ?? ''
+}));
+// 新しい順に（date がISO想定）
+items.sort((a,b)=> new Date(b.date).getTime() - new Date(a.date).getTime());
 ---
-<BaseLayout title="Blog | Hirotomo Blog">
-  <h2>Blog</h2>
-  <ul>
-    <li><a href="/blog/omotenashi/">日本の『おもてなし』を英語で説明する方法</a></li>
-  </ul>
+<BaseLayout title="Blog | Hirotomo Blog" description="Articles on English and Japanese culture">
+  <h1 class="text-2xl font-bold mb-4">Blog</h1>
+  <div class="grid gap-3">
+    {items.map(i => <BlogCard href={i.href} title={i.title} description={i.description} date={i.date} />)}
+  </div>
 </BaseLayout>
